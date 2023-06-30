@@ -22,7 +22,7 @@ class Enemy():
             self.walk_r = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_r.png",8,1,scale=DEFAULT_ENEMY_SIZE)
             self.walk_l =  Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_l.png",8,1,scale=DEFAULT_ENEMY_SIZE)
             self.stay_r = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_l.png",8,1,scale=DEFAULT_ENEMY_SIZE)
-            self.stay_l = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_r.png",8,1,scale=DEFAULT_ENEMY_SIZE)   
+            self.stay_l = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_r.png",8,1,scale=DEFAULT_ENEMY_SIZE) 
         self.contador = 0
         self.frame = 0
         self.lives = 5
@@ -147,11 +147,9 @@ class Enemy():
         self.direct_animation(player)
 
     def draw(self,screen):
-        
         if(DEBUG):
             pygame.draw.rect(screen,color=(255,0 ,0),rect=self.collition_rect)
-            pygame.draw.rect(screen,color=(255,255,0),rect=self.ground_collition_rect)
-        
+            pygame.draw.rect(screen,color=(255,255,0),rect=self.ground_collition_rect) 
         self.image = self.animation[self.frame]
         screen.blit(self.image,self.rect)
 

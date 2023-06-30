@@ -1,7 +1,7 @@
 {
     "niveles": [
         {
-            "id": 0,
+            "id": 1,
             "GROUND_LEVEL": 600,
             "player": {
                 "x": 30,
@@ -124,10 +124,10 @@
 
         },
         {
-            "id": 1,
+            "id": 2,
             "GROUND_LEVEL": 600,
             "player": {
-                "x": 30,
+                "x": 600,
                 "y": 600,
                 "speed_walk": 10,
                 "speed_run": 10,
@@ -163,56 +163,8 @@
             "enemies": [
                 {
                     "x": 870,
-                    "y": 320,
+                    "y": 350,
                     "speed_walk": 4,
-                    "speed_run": 8,
-                    "gravity": 8,
-                    "jump_power":30,
-                    "frame_rate_ms": 80,
-                    "move_rate_ms": 80,
-                    "jump_height": 140,
-                    "p_scale":0.08,
-                    "interval_time_jump": 300,
-                    "enemy_type": 0,
-                    "x_length": 50,
-                    "x_moving": 1
-                },
-                {
-                    "x": 470,
-                    "y": 470,
-                    "speed_walk": 4,
-                    "speed_run": 8,
-                    "gravity": 8,
-                    "jump_power":30,
-                    "frame_rate_ms": 80,
-                    "move_rate_ms": 80,
-                    "jump_height": 140,
-                    "p_scale":0.08,
-                    "interval_time_jump": 300,
-                    "enemy_type": 0,
-                    "x_length": 50,
-                    "x_moving": 1
-                },
-                {
-                    "x": 630,
-                    "y": 620,
-                    "speed_walk": 4,
-                    "speed_run": 8,
-                    "jump_power":30,
-                    "gravity": 8,
-                    "frame_rate_ms": 80,
-                    "move_rate_ms": 80,
-                    "jump_height": 140,
-                    "p_scale":0.08,
-                    "interval_time_jump": 300,
-                    "enemy_type": 0,
-                    "x_length": 50,
-                    "x_moving": 1
-                },
-                {
-                    "x": 1000,
-                    "y": 500,
-                    "speed_walk": 8,
                     "speed_run": 8,
                     "gravity": 8,
                     "jump_power":30,
@@ -222,12 +174,18 @@
                     "p_scale":0.08,
                     "interval_time_jump": 300,
                     "enemy_type": 1,
-                    "x_length": 200,
-                    "x_moving": 0
-
+                    "x_length": 50,
+                    "x_moving": 1
                 }
-
-            ]
+            ],
+            "boss": 
+                {
+                    "x": 50,
+                    "y": 400,
+                   "frame_rate_ms": 100,
+                   "move_rate_ms": 100
+                }
+            
 
         }
     ]

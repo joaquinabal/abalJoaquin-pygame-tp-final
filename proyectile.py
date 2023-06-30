@@ -26,14 +26,14 @@ class Proyectile:
                 self.image = self.sprite_left
         screen.blit(self.image,self.rect)
 
-    def update(self,delta_ms,enemy_list,platform_list,proyectile_list, proyectile,player,loot_list):
+    def update(self,delta_ms,enemy_list,platform_list,proyectile_list, proyectile,player,loot_list,boss):
         if self.direction == DIRECTION_L:
             self.rect.x -= self.speed
         else:
             self.rect.x += self.speed
-        self.collide(delta_ms,enemy_list,platform_list,proyectile_list, proyectile, player,loot_list)
+        self.collide(delta_ms,enemy_list,platform_list,proyectile_list, proyectile, player,loot_list,boss)
 
-    def collide(self,delta_ms,enemy_list, platform_list,proyectile_list, proyectile, player,loot_list):
+    def collide(self,delta_ms,enemy_list, platform_list,proyectile_list, proyectile, player,loot_list,boss):
         if self.player_shoot:
             for enemy in enemy_list:
                 if self.rect.colliderect(enemy.rect):
@@ -42,6 +42,11 @@ class Proyectile:
                     loot = Loot(enemy.rect.x, enemy.rect.bottom,15)
                     loot_list.append(loot) 
                     proyectile_list.remove(proyectile)
+            try:
+                if self.rect.colliderect(boss.rect):
+                    boss.suffer_damage()
+            except:
+                pass
         else:
             if self.rect.colliderect(player.rect):
                 player.lives -= 1

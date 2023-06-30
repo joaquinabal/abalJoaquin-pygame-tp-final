@@ -11,6 +11,7 @@ from plataforma import Plataform
 from background import Background
 from bullet import Bullet
 from gui_label import Label
+from boss import Boss
 
 class FormGameLevel2(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active,config_json):
@@ -33,7 +34,7 @@ class FormGameLevel2(Form):
         # --- GAME ELEMNTS --- 
         self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/forest/forest.png")
 
-
+        self.boss = self.generate_boss()
 
         self.enemies_list = []
         self.generate_enemies()
@@ -70,6 +71,11 @@ class FormGameLevel2(Form):
         for platform in data_platforms:
             self.platform_list.append(Plataform(x=platform["x"],y=platform["y"],height=platform["height"],width=platform["width"],
                             image=platform["image"],column=platform["column"]))
+            
+    def generate_boss(self):
+        data_boss = self.levels[1]["boss"]
+        boss = Boss(x=data_boss["x"], y=data_boss["y"], frame_rate_ms=data_boss["frame_rate_ms"], move_rate_ms=data_boss["move_rate_ms"])
+        return boss
 
 
 
@@ -85,7 +91,7 @@ class FormGameLevel2(Form):
             aux_widget.update(lista_eventos)
 
         for bullet_element in self.bullet_list:
-            bullet_element.update(delta_ms,self.enemies_list,self.platform_list,self.bullet_list,bullet_element,self.player_1,self.loot_list)
+            bullet_element.update(delta_ms,self.enemies_list,self.platform_list,self.bullet_list,bullet_element,self.player_1,self.loot_list,self.boss)
             
         for proyectile_enemy_element in self.proyectile_enemy_list:
             proyectile_enemy_element.update(delta_ms,self.enemies_list,self.platform_list,self.proyectile_enemy_list,proyectile_enemy_element,self.player_1,self.loot_list)
@@ -95,11 +101,12 @@ class FormGameLevel2(Form):
             
         for loot_element in self.loot_list:
             loot_element.update(self.player_1, self.loot_list, loot_element,self.platform_list)
-            
 
         self.text_score._text = f'SCORE: {str(self.player_1.score)}'
         self.player_1.events(delta_ms,keys,event,self.bullet_list,self.platform_list)
         self.player_1.update(delta_ms,self.platform_list,self.enemies_list)
+        
+        self.boss.update(delta_ms,self.player_1)
 
         self.pb_lives.value = self.player_1.lives 
 
@@ -118,6 +125,8 @@ class FormGameLevel2(Form):
             enemy_element.draw(self.surface)
         
         self.player_1.draw(self.surface)
+        
+        self.boss.draw(self.surface)
 
         for bullet_element in self.bullet_list:
             bullet_element.draw(self.surface)
