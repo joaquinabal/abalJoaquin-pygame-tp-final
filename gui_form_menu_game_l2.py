@@ -12,7 +12,7 @@ from background import Background
 from bullet import Bullet
 from gui_label import Label
 
-class FormGameLevel1(Form):
+class FormGameLevel2(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active,config_json):
         super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active)
 
@@ -23,9 +23,9 @@ class FormGameLevel1(Form):
         self.boton1 = Button(master=self,x=0,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="BACK",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton2 = Button(master=self,x=200,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="PAUSE",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton_shoot = Button(master=self,x=400,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_shoot,on_click_param="form_menu_B",text="SHOOT",font="Verdana",font_size=30,font_color=C_WHITE)
-        
+       
         self.text_score = Label(master=self,x=200,y=100,w=200,h=50,color_background=None,color_border=None,image_background=None,
-                                  text=f'SCORE: {str(self.player_1.score)}',font='Arial',font_size=30,font_color=C_WHITE)
+                            text=f'SCORE: {str(self.player_1.score)}',font='Arial',font_size=30,font_color=C_WHITE)
        
         self.pb_lives = ProgressBar(master=self,x=250,y=50,w=150,h=30,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment05.png",value = self.player_1.lives, value_max=5)
         self.widget_list = [self.boton1,self.boton2,self.text_score,self.pb_lives,self.boton_shoot]
@@ -48,7 +48,7 @@ class FormGameLevel1(Form):
 
 
     def generate_player(self):
-        data_player = self.levels[0]["player"]
+        data_player = self.levels[1]["player"]
         player = Player(x=data_player["x"],y=data_player["y"],speed_walk=data_player["speed_walk"],speed_run=data_player["speed_run"],
                         gravity=data_player["gravity"],jump_power=data_player["jump_power"],frame_rate_ms=data_player["frame_rate_ms"],
                         move_rate_ms=data_player["move_rate_ms"],jump_height=data_player["jump_height"],
@@ -56,7 +56,7 @@ class FormGameLevel1(Form):
         return player
 
     def generate_enemies(self):
-        data_enemies = self.levels[0]["enemies"]
+        data_enemies = self.levels[1]["enemies"]
         for enemy in data_enemies:
             self.enemies_list.append(Enemy(x=enemy["x"],y=enemy["y"],speed_walk=enemy["speed_walk"],speed_run=enemy["speed_run"],
                             gravity=enemy["gravity"],jump_power=enemy["jump_power"],frame_rate_ms=enemy["frame_rate_ms"],
@@ -66,10 +66,10 @@ class FormGameLevel1(Form):
         
     
     def generate_platform(self):
-        data_platforms = self.levels[0]["platforms"]
+        data_platforms = self.levels[1]["platforms"]
         for platform in data_platforms:
             self.platform_list.append(Plataform(x=platform["x"],y=platform["y"],height=platform["height"],width=platform["width"],
-                            image=platform["image"]))
+                            image=platform["image"],column=platform["column"]))
 
 
 
@@ -103,9 +103,7 @@ class FormGameLevel1(Form):
 
         self.pb_lives.value = self.player_1.lives 
 
-        if self.player_1.score > 1000:
-            self.set_active("form_game_L2")
-        
+
     def draw(self): 
         super().draw()
         self.static_background.draw(self.surface)

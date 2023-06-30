@@ -44,13 +44,15 @@ class Proyectile:
                     proyectile_list.remove(proyectile)
         else:
             if self.rect.colliderect(player.rect):
-                player.score -= 1
+                player.lives -= 1
                 proyectile_list.remove(proyectile)
                 
-       # for platform in platform_list:
-            #if self.rect.colliderect(platform.rect_right_side_col) or self.rect.colliderect(platform.rect_left_side_col):
-              #  proyectile_list.remove(proyectile)
-                
+        for platform in platform_list:
+            try:
+                if self.rect.colliderect(platform.rect_right_side_col) or self.rect.colliderect(platform.rect_left_side_col):
+                    proyectile_list.remove(proyectile)
+            except:
+                pass        
                  
                  
     def timer(self):

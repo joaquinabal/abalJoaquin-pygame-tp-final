@@ -66,6 +66,7 @@ class Player:
         
         self.previous_time = time.time()
                 
+        self.font_score = pygame.font.Font(None, 32)
 
     def walk(self,direction):
         if(self.is_jump == False and self.is_fall == False):
@@ -104,7 +105,7 @@ class Player:
                 else:
                     self.animation = self.knife_l      
 
-    def jump(self,on_off = True):
+    def jump(self,platform_list,on_off = True):
         if(on_off and self.is_jump == False and self.is_fall == False):
             self.y_start_jump = self.rect.y
             if(self.direction == DIRECTION_R):
@@ -161,8 +162,19 @@ class Player:
                     self.change_y(self.gravity)
             else:
                 if (self.is_jump): 
-                    self.jump(False)
+                    self.jump(plataform_list,False)
                 self.is_fall = False            
+            if self.collide_platform_sides(plataform_list):
+                self.move_x = 0
+            if  self.collide_platform_bottom(plataform_list):
+                print("colision bottom")
+                self.move_y = 0
+                
+            
+
+    def show_score(self):
+        score_count = self.font_score.render('SCORE: {0}'.format(self.score), True, C_WHITE, None)
+        return score_count
 
     def is_on_plataform(self,plataform_list):
         retorno = False
@@ -186,9 +198,10 @@ class Player:
             else: 
                 self.frame = 0
  
-    def update(self,delta_ms,plataform_list):
+    def update(self,delta_ms,plataform_list,enemy_list):
         self.do_movement(delta_ms,plataform_list)
         self.do_animation(delta_ms)
+        self.colllide_enemy(enemy_list)
         
     
     def draw(self,screen):
@@ -202,9 +215,10 @@ class Player:
         except IndexError:
             print("IndexError")
         screen.blit(self.imagen, self.rect)
+        screen.blit(self.show_score(), SCORE_POSITION)
         
 
-    def events(self,delta_ms,keys,event,proyectile_list):
+    def events(self,delta_ms,keys,event,proyectile_list,platform_list):
         self.tiempo_transcurrido += delta_ms
 
 
@@ -221,7 +235,7 @@ class Player:
 
         if(keys[pygame.K_SPACE]):
             if((self.tiempo_transcurrido - self.tiempo_last_jump) > self.interval_time_jump):
-                self.jump(True)
+                self.jump(platform_list,True)
                 self.tiempo_last_jump = self.tiempo_transcurrido
 
         if keys[pygame.K_q]:
@@ -260,12 +274,12 @@ class Player:
                 return False
             
 
-    def calculate_delta_time(self,ms_threshold):
+    def calculate_delta_time(self,ms_threshold, time):
         current_time = time.time()
         delta_time = current_time - previous_time
         previous_time = current_time
 
-        if delta_time * 1000 >= ms_threshold:
+        if delta_time * time >= ms_threshold:
             return True
         else:
             return False  
@@ -289,3 +303,48 @@ class Player:
         else:
             self.animation = self.atk_stance_l
             
+    def colllide_enemy(self, enemy_list):
+        collision_detected = False  # Bandera para indicar si se detectó una colisión con algún enemigo   
+        for enemy in enemy_list:
+            if self.rect.colliderect(enemy.rect):
+                collision_detected = True
+                break  # Si hay una colisión, no es necesario verificar los otros enemigos
+        if collision_detected:
+            if not self.colliding_enemy_flag:  # Verifica si ya estás colisionando con un enemigo
+                self.be_hurted()
+                self.lives -= 1
+                print(self.lives)
+                self.colliding_enemy_flag = True  # Establece la bandera para indicar que estás colisionando con un enemigo
+        else:
+            self.colliding_enemy_flag = False
+            
+    def collide_platform_sides(self, platform_list): 
+        retorno = False
+        for platform in platform_list:
+            try:
+                if self.rect.colliderect(platform.rect_right_side_col) or self.rect.colliderect(platform.rect_left_side_col):
+                    retorno = True
+                    break
+            except:
+                pass
+        return retorno        
+    
+    def collide_platform_bottom(self, platform_list): 
+        retorno = False
+        for platform in platform_list:
+            try:
+                if self.rect.colliderect(platform.rect_bottom_col):
+                    retorno = True
+                    break
+            except:
+                pass        
+        return retorno 
+    
+    
+    def be_hurted(self):
+        pass
+    '''CHEQUEAR 
+    if self.direction == DIRECTION_R:
+        self.animation = self.hurt_r
+    else:
+        self.animation = self.hurt_l'''

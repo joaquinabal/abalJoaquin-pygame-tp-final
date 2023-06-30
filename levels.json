@@ -131,87 +131,101 @@
                 "y": 600,
                 "speed_walk": 10,
                 "speed_run": 10,
-                "gravity": 20,
-                "jumping": 40,
+                "gravity": 10,
+                "jump_power": 20,
                 "frame_rate_ms": 100,
                 "move_rate_ms": 45,
-                "jump_height": 160
+                "jump_height": 160,
+                "p_scale":0.2,
+                "interval_time_jump": 300
             },
             "platforms": [
                 {
-                    "x": 400,
-                    "y": 540,
-                    "height": 50,
-                    "width": 200,
-                    "image": "images/tiles/0.png"
+                    "x": 700,
+                    "y": 0,
+                    "height": 400,
+                    "width": 100,
+                    "image": "images/tiles/vertical_up.png",
+                    "type": 1,
+                    "column": 1
                 },
                 {
-                    "x": 600,
-                    "y": 390,
-                    "height": 50,
-                    "width": 50,
-                    "image": "images/tiles/0.png"
-                },
-                {
-                    "x": 800,
-                    "y": 390,
-                    "height": 50,
-                    "width": 200,
-                    "image": "images/tiles/1.png"
-                },
-                {
-                    "x": 200,
-                    "y": 540,
-                    "height": 50,
-                    "width": 50,
-                    "image": "images/tiles/1.png"
-                },
-                {
-                    "x": 300,
-                    "y": 260,
-                    "height": 50,
-                    "width": 200,
-                    "image": "images/tiles/1.png"
+                    "x": 700,
+                    "y": 550,
+                    "height": 400,
+                    "width": 100,
+                    "image": "images/tiles/vertical_down.png",
+                    "type": 1,
+                    "column": 1
                 }
+
             ],
             "enemies": [
                 {
                     "x": 870,
                     "y": 320,
-                    "speed_walk": 1.5,
+                    "speed_walk": 4,
                     "speed_run": 8,
                     "gravity": 8,
+                    "jump_power":30,
                     "frame_rate_ms": 80,
                     "move_rate_ms": 80,
-                    "x_length": 60,
+                    "jump_height": 140,
+                    "p_scale":0.08,
+                    "interval_time_jump": 300,
                     "enemy_type": 0,
+                    "x_length": 50,
                     "x_moving": 1
                 },
                 {
                     "x": 470,
                     "y": 470,
-                    "speed_walk": 1.5,
+                    "speed_walk": 4,
                     "speed_run": 8,
                     "gravity": 8,
+                    "jump_power":30,
                     "frame_rate_ms": 80,
                     "move_rate_ms": 80,
-                    "x_length": 250,
+                    "jump_height": 140,
+                    "p_scale":0.08,
+                    "interval_time_jump": 300,
                     "enemy_type": 0,
+                    "x_length": 50,
                     "x_moving": 1
                 },
                 {
                     "x": 630,
                     "y": 620,
-                    "speed_walk": 1.5,
+                    "speed_walk": 4,
                     "speed_run": 8,
+                    "jump_power":30,
                     "gravity": 8,
                     "frame_rate_ms": 80,
                     "move_rate_ms": 80,
-                    "x_length": 250,
+                    "jump_height": 140,
+                    "p_scale":0.08,
+                    "interval_time_jump": 300,
                     "enemy_type": 0,
+                    "x_length": 50,
                     "x_moving": 1
-                }
+                },
+                {
+                    "x": 1000,
+                    "y": 500,
+                    "speed_walk": 8,
+                    "speed_run": 8,
+                    "gravity": 8,
+                    "jump_power":30,
+                    "frame_rate_ms": 80,
+                    "move_rate_ms": 80,
+                    "jump_height": 140,
+                    "p_scale":0.08,
+                    "interval_time_jump": 300,
+                    "enemy_type": 1,
+                    "x_length": 200,
+                    "x_moving": 0
 
+                }
 
             ]
 

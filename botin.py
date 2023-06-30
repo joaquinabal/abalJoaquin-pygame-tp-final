@@ -26,6 +26,7 @@ class Loot:
         if self.rect.colliderect(player.rect):
             player.score += 300
             loot_list.remove(loot)  
+            print(player.score)
 
     def update(self, player, loot_list, loot,platform_list):
         self.move(platform_list)

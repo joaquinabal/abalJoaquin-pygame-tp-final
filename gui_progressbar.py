@@ -22,7 +22,6 @@ class ProgressBar(Widget):
             self.slave_surface.blit(self.surface_element, (x*self.w/self.value_max, 0))
 
     def update(self,lista_eventos):
-
         self.render()
 
     

@@ -15,6 +15,4 @@ class Background:
 
     def draw(self,screen):
         screen.blit(self.image,self.rect)
-        if(DEBUG):
-            pygame.draw.rect(screen,color=(255,0 ,0),rect=self.collition_rect)        
         

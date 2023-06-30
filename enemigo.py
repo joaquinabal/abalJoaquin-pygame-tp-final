@@ -67,6 +67,7 @@ class Enemy():
         self.movement_right = True
         self.flag_attack = True
         
+        self.tiempo_inicial = pygame.time.get_ticks()
         
     def change_x(self,delta_x):
         self.rect.x += delta_x
@@ -162,17 +163,21 @@ class Enemy():
         proyectile_list.append(proyectile)
     
     def attack(self,player,proyectile_list):
-        if self.x_moving == 0 and self.rect.y in range(player.rect.y-10,player.rect.y+10):
-            if self.flag_attack:         
-                print("asd")
-                if self.direction == DIRECTION_R:
-                    self.create_proyectile(proyectile_list,self.rect.right,self.rect.centery)
-                else:
-                    self.create_proyectile(proyectile_list,self.rect.left,self.rect.centery)    
-                self.flag_attack = False
-        else:
-            self.flag_attack = True
-        
+        if self.x_moving == 0:
+            if player.rect.y in range(self.rect.y-10,self.rect.y+10):
+                if self.flag_attack:         
+                    print("asd")
+                    if self.direction == DIRECTION_R:
+                        self.create_proyectile(proyectile_list,self.rect.right,self.rect.centery)
+                    else:
+                        self.create_proyectile(proyectile_list,self.rect.left,self.rect.centery)    
+                    self.flag_attack = False
+            else:
+                if self.calculate_delta_time(5000):
+                    print("funca")
+                    self.flag_attack = True
+                    self.tiempo_inicial = pygame.time.get_ticks()
+    
     def direct_animation(self,player):
         if self.x_moving == 0:
             if player.rect.x < self.rect.x:
@@ -181,3 +186,11 @@ class Enemy():
             else:
                 self.direction = DIRECTION_R
                 self.animation = self.walk_r
+
+    def calculate_delta_time(self,tiempo_objetivo):
+        tiempo_actual = pygame.time.get_ticks()
+        tiempo_transcurrido = tiempo_actual - self.tiempo_inicial
+        if tiempo_transcurrido >= tiempo_objetivo:
+            return True
+        else:
+            return False
