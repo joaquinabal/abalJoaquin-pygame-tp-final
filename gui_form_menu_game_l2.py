@@ -12,6 +12,7 @@ from background import Background
 from bullet import Bullet
 from gui_label import Label
 from boss import Boss
+from auxiliar import Auxiliar
 
 class FormGameLevel2(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active,config_json):
@@ -19,6 +20,9 @@ class FormGameLevel2(Form):
 
         self.levels = config_json
         self.player_1 = self.generate_player()
+        self.music_path = r"music/boss_music.wav"
+        Auxiliar.generar_musica(self.music_path,10)
+        
         
         # --- GUI WIDGET --- 
         self.boton1 = Button(master=self,x=0,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="BACK",font="Verdana",font_size=30,font_color=C_WHITE)
@@ -70,7 +74,7 @@ class FormGameLevel2(Form):
         data_platforms = self.levels[1]["platforms"]
         for platform in data_platforms:
             self.platform_list.append(Plataform(x=platform["x"],y=platform["y"],height=platform["height"],width=platform["width"],
-                            image=platform["image"],column=platform["column"]))
+                            image=platform["image"]))
             
     def generate_boss(self):
         data_boss = self.levels[1]["boss"]
@@ -106,7 +110,7 @@ class FormGameLevel2(Form):
         self.player_1.events(delta_ms,keys,event,self.bullet_list,self.platform_list)
         self.player_1.update(delta_ms,self.platform_list,self.enemies_list)
         
-        self.boss.update(delta_ms,self.player_1)
+        self.boss.update(delta_ms,self.player_1,self.enemies_list)
 
         self.pb_lives.value = self.player_1.lives 
 
@@ -136,3 +140,5 @@ class FormGameLevel2(Form):
             
         for loot_element in self.loot_list:
             loot_element.draw(self.surface)
+            
+    

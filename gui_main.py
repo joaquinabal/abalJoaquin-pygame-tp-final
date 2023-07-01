@@ -13,6 +13,8 @@ from auxiliar import Auxiliar
 flags = DOUBLEBUF 
 screen = pygame.display.set_mode((ANCHO_VENTANA,ALTO_VENTANA), flags, 16)
 pygame.init()
+pygame.mixer.init()
+
 clock = pygame.time.Clock()
 config_json = Auxiliar.leer_archivo("levels.json")
 
@@ -37,7 +39,6 @@ while True:
     if(aux_form_active != None):
         aux_form_active.update(lista_eventos,keys,delta_ms,event)
         aux_form_active.draw()
-
     pygame.display.flip()
 
 

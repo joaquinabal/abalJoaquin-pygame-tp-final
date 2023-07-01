@@ -5,11 +5,15 @@ from gui_form import Form
 from gui_button import Button
 from gui_textbox import TextBox
 from gui_progressbar import ProgressBar
+from auxiliar import Auxiliar
 
 
 class FormMenuA(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active):
         super().__init__(name,master_surface,x,y,w,h,color_background,color_border,active)
+
+        self.music_path = r"music/title_theme.wav"
+        Auxiliar.generar_musica(self.music_path,10)
 
         self.boton1 = Button(master=self,x=20,y=20,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="",text="SUMA +",font="Verdana",font_size=30,font_color=C_WHITE)
         self.boton2 = Button(master=self,x=20,y=80,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton2,on_click_param="",text="RESTA -",font="Verdana",font_size=30,font_color=C_WHITE)

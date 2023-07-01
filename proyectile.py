@@ -44,6 +44,7 @@ class Proyectile:
                     proyectile_list.remove(proyectile)
             try:
                 if self.rect.colliderect(boss.rect):
+                    proyectile_list.remove(proyectile)
                     boss.suffer_damage()
             except:
                 pass

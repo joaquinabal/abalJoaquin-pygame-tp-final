@@ -247,8 +247,8 @@ class Player:
                 self.charge_attack() 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_q:   
-                print("q")
-                print(self.atk_stance_flag)       
+                #print("q")
+               # print(self.atk_stance_flag)       
                 if not unpressed_flag:   
                     self.attack()
                     if self.direction == DIRECTION_R:
@@ -297,7 +297,7 @@ class Player:
             self.animation = self.atk_l
             
     def atk_stance(self):
-        print("atk stance")
+        #print("atk stance")
         if self.direction == DIRECTION_R:
             self.animation = self.atk_stance_r
         else:
