@@ -38,7 +38,7 @@ class FormGameLevel2(Form):
         # --- GAME ELEMNTS --- 
         self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/forest/forest.png")
 
-        self.boss = self.generate_boss()
+        self.boss = None
 
         self.enemies_list = []
         self.generate_enemies()
@@ -74,12 +74,7 @@ class FormGameLevel2(Form):
         data_platforms = self.levels[1]["platforms"]
         for platform in data_platforms:
             self.platform_list.append(Plataform(x=platform["x"],y=platform["y"],height=platform["height"],width=platform["width"],
-                            image=platform["image"]))
-            
-    def generate_boss(self):
-        data_boss = self.levels[1]["boss"]
-        boss = Boss(x=data_boss["x"], y=data_boss["y"], frame_rate_ms=data_boss["frame_rate_ms"], move_rate_ms=data_boss["move_rate_ms"])
-        return boss
+                            image=platform["image"],column=platform["column"]))
 
 
 
@@ -98,7 +93,7 @@ class FormGameLevel2(Form):
             bullet_element.update(delta_ms,self.enemies_list,self.platform_list,self.bullet_list,bullet_element,self.player_1,self.loot_list,self.boss)
             
         for proyectile_enemy_element in self.proyectile_enemy_list:
-            proyectile_enemy_element.update(delta_ms,self.enemies_list,self.platform_list,self.proyectile_enemy_list,proyectile_enemy_element,self.player_1,self.loot_list)
+            proyectile_enemy_element.update(delta_ms,self.enemies_list,self.platform_list,self.proyectile_enemy_list,proyectile_enemy_element,self.player_1,self.loot_list,self.boss)
 
         for enemy_element in self.enemies_list:
             enemy_element.update(delta_ms,self.platform_list,self.player_1,self.proyectile_enemy_list)
@@ -109,8 +104,6 @@ class FormGameLevel2(Form):
         self.text_score._text = f'SCORE: {str(self.player_1.score)}'
         self.player_1.events(delta_ms,keys,event,self.bullet_list,self.platform_list)
         self.player_1.update(delta_ms,self.platform_list,self.enemies_list)
-        
-        self.boss.update(delta_ms,self.player_1,self.enemies_list)
 
         self.pb_lives.value = self.player_1.lives 
 
@@ -129,8 +122,6 @@ class FormGameLevel2(Form):
             enemy_element.draw(self.surface)
         
         self.player_1.draw(self.surface)
-        
-        self.boss.draw(self.surface)
 
         for bullet_element in self.bullet_list:
             bullet_element.draw(self.surface)

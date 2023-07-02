@@ -8,6 +8,7 @@ from gui_form_menu_B import FormMenuB
 from gui_form_menu_C import FormMenuC
 from gui_form_menu_game_l1 import FormGameLevel1
 from gui_form_menu_game_l2 import FormGameLevel2
+from gui_form_menu_game_l3 import FormGameLevel3
 from auxiliar import Auxiliar
 
 flags = DOUBLEBUF 
@@ -24,6 +25,7 @@ form_menu_C = FormMenuC(name="form_menu_C",master_surface = screen,x=0,y=0,w=ANC
 
 form_game_L1 = FormGameLevel1(name="form_game_L1",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False,config_json=config_json)
 form_game_L2 = FormGameLevel2(name="form_game_L2",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False,config_json=config_json)
+form_game_L3 = FormGameLevel3(name="form_game_L3",master_surface = screen,x=0,y=0,w=ANCHO_VENTANA,h=ALTO_VENTANA,color_background=(0,255,255),color_border=(255,0,255),active=False,config_json=config_json)
 
 while True:     
     lista_eventos = pygame.event.get()

@@ -65,12 +65,19 @@ class Boss():
         if self.calculate_delta_time(7000) and self.animation == self.stay:
             print("entro al ataque")
             self.animation = self.attack
-
+            
             self.tiempo_inicial = pygame.time.get_ticks()
         if self.animation == self.attack and self.frame == len(self.animation) - 1:
             if player.rect.y > 575:
+                print("golpeao")
+                player.tiempo_inicial = pygame.time.get_ticks()
                 player.lives -= 1
-                print(player.lives)
+                player.move_y = -20
+            # if player.rect.y < 525:
+            #     print("aja?")
+            #     player.move_y = 0
+                player.flag_boss_hurted = True
+            print(player.lives)
             self.generate_enemy(enemies_list,player)
             print("entra a stay")
             self.frame = 0

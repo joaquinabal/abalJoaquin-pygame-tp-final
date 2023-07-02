@@ -22,35 +22,40 @@
                     "y": 540,
                     "height": 50,
                     "width": 200,
-                    "image": "images/tiles/0.png"
+                    "image": "images/tiles/0.png",
+                    "column": 0
                 },
                 {
                     "x": 600,
                     "y": 390,
                     "height": 50,
                     "width": 50,
-                    "image": "images/tiles/0.png"
+                    "image": "images/tiles/0.png",
+                    "column": 0
                 },
                 {
                     "x": 800,
                     "y": 390,
                     "height": 50,
                     "width": 200,
-                    "image": "images/tiles/1.png"
+                    "image": "images/tiles/1.png",
+                    "column": 0
                 },
                 {
                     "x": 200,
                     "y": 540,
                     "height": 50,
                     "width": 50,
-                    "image": "images/tiles/1.png"
+                    "image": "images/tiles/1.png",
+                    "column": 0
                 },
                 {
                     "x": 300,
                     "y": 260,
                     "height": 50,
                     "width": 200,
-                    "image": "images/tiles/1.png"
+                    "image": "images/tiles/1.png",
+                    "column": 0
                 }
             ],
             "enemies": [
@@ -122,8 +127,7 @@
 
             ]
 
-        },
-        {
+        },{
             "id": 2,
             "GROUND_LEVEL": 600,
             "player": {
@@ -141,39 +145,179 @@
             },
             "platforms": [
                 {
-                    "x": 1100,
-                    "y": 540,
-                    "height": 50,
-                    "width": 200,
-                    "image": "images/tiles/0.png"
+                    "x": 700,
+                    "y": 0,
+                    "height": 400,
+                    "width": 100,
+                    "image": "images/tiles/vertical_up.png",
+                    "column": 1
                 },
                 {
-                    "x": 800,
+                    "x": 700,
+                    "y": 600,
+                    "height": 600,
+                    "width": 100,
+                    "image": "images/tiles/vertical_down.png",
+                    "column": 1
+                },
+                {
+                    "x": 250,
+                    "y": 540,
+                    "height": 50,
+                    "width": 250,
+                    "image": "images/tiles/0.png",
+                    "column": 0
+                },
+                {
+                    "x": 250,
+                    "y": 400,
+                    "height": 50,
+                    "width": 250,
+                    "image": "images/tiles/0.png",
+                    "column": 0
+                }
+
+            ],
+            "enemies": [
+                {
+                    "x": 100,
+                    "y": 350,
+                    "speed_walk": 4,
+                    "speed_run": 8,
+                    "gravity": 8,
+                    "jump_power":30,
+                    "frame_rate_ms": 80,
+                    "move_rate_ms": 80,
+                    "jump_height": 140,
+                    "p_scale":0.08,
+                    "interval_time_jump": 300,
+                    "enemy_type": 1,
+                    "x_length": 300,
+                    "x_moving": 0
+                },
+                {
+                    "x": 600,
+                    "y": 200,
+                    "speed_walk": 4,
+                    "speed_run": 8,
+                    "gravity": 8,
+                    "jump_power":30,
+                    "frame_rate_ms": 80,
+                    "move_rate_ms": 80,
+                    "jump_height": 140,
+                    "p_scale":0.08,
+                    "interval_time_jump": 300,
+                    "enemy_type": 1,
+                    "x_length":400,
+                    "x_moving": 0
+                },
+                {
+                    "x": 850,
+                    "y": 350,
+                    "speed_walk": 4,
+                    "speed_run": 8,
+                    "gravity": 8,
+                    "jump_power":30,
+                    "frame_rate_ms": 80,
+                    "move_rate_ms": 80,
+                    "jump_height": 140,
+                    "p_scale":0.08,
+                    "interval_time_jump": 300,
+                    "enemy_type": 1,
+                    "x_length": 300,
+                    "x_moving": 0
+                },
+                {
+                    "x": 1350,
+                    "y": 200,
+                    "speed_walk": 4,
+                    "speed_run": 8,
+                    "gravity": 8,
+                    "jump_power":30,
+                    "frame_rate_ms": 80,
+                    "move_rate_ms": 80,
+                    "jump_height": 140,
+                    "p_scale":0.08,
+                    "interval_time_jump": 300,
+                    "enemy_type": 1,
+                    "x_length": 400,
+                    "x_moving": 0
+                }
+            ],
+            "boss": 
+                {
+                    "x": 50,
+                    "y": 400,
+                   "frame_rate_ms": 100,
+                   "move_rate_ms": 100
+                }
+            
+
+        },
+        {
+            "id": 3,
+            "GROUND_LEVEL": 600,
+            "player": {
+                "x": 1000,
+                "y": 600,
+                "speed_walk": 10,
+                "speed_run": 10,
+                "gravity": 10,
+                "jump_power": 20,
+                "frame_rate_ms": 100,
+                "move_rate_ms": 45,
+                "jump_height": 160,
+                "p_scale":0.2,
+                "interval_time_jump": 300
+            },
+            "platforms": [
+                {
+                    "x": 1200,
                     "y": 540,
                     "height": 50,
                     "width": 200,
-                    "image": "images/tiles/0.png"
+                    "image": "images/tiles/0.png",
+                    "column": 0
+                },
+                {
+                    "x": 900,
+                    "y": 540,
+                    "height": 50,
+                    "width": 200,
+                    "image": "images/tiles/0.png",
+                    "column": 0
+                },
+                {
+                    "x": 600,
+                    "y": 540,
+                    "height": 50,
+                    "width": 200,
+                    "image": "images/tiles/0.png",
+                    "column": 0
+                },
+                {
+                    "x": 1100,
+                    "y": 390,
+                    "height": 50,
+                    "width": 100,
+                    "image": "images/tiles/1.png",
+                    "column": 0
                 },
                 {
                     "x": 800,
                     "y": 390,
                     "height": 50,
-                    "width": 150,
-                    "image": "images/tiles/1.png"
+                    "width": 100,
+                    "image": "images/tiles/1.png",
+                    "column": 0
                 },
                 {
                     "x": 400,
-                    "y": 540,
-                    "height": 50,
-                    "width": 200,
-                    "image": "images/tiles/0.png"
-                },
-                {
-                    "x": 500,
-                    "y": 390,
-                    "height": 50,
-                    "width": 150,
-                    "image": "images/tiles/1.png"
+                    "y": 0,
+                    "height": 600,
+                    "width": 100,
+                    "image": "images/tiles/vertical_up.png",
+                    "column": 1
                 }
 
             ],

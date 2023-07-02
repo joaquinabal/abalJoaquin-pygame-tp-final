@@ -64,9 +64,12 @@ class Player:
         self.atk_stance_flag = False
         self.tiempo_transcurrido = 0
         
-        self.previous_time = time.time()
+
+        self.tiempo_inicial = pygame.time.get_ticks()
                 
         self.font_score = pygame.font.Font(None, 32)
+
+        self.flag_boss_hurted = False
 
     def walk(self,direction):
         if(self.is_jump == False and self.is_fall == False):
@@ -164,8 +167,12 @@ class Player:
                 if (self.is_jump): 
                     self.jump(plataform_list,False)
                 self.is_fall = False            
-            if self.collide_platform_sides(plataform_list):
+            if self.collide_platform_left_side(plataform_list):
                 self.move_x = 0
+                self.change_x(-5)
+            elif self.collide_platform_right_side(plataform_list):
+                self.move_x = 0
+                self.change_x(5)
             if  self.collide_platform_bottom(plataform_list):
                 print("colision bottom")
                 self.move_y = 0
@@ -202,6 +209,7 @@ class Player:
         self.do_movement(delta_ms,plataform_list)
         self.do_animation(delta_ms)
         self.colllide_enemy(enemy_list)
+        self.boss_hurted()
         
     
     def draw(self,screen):
@@ -274,15 +282,13 @@ class Player:
                 return False
             
 
-    def calculate_delta_time(self,ms_threshold, time):
-        current_time = time.time()
-        delta_time = current_time - previous_time
-        previous_time = current_time
-
-        if delta_time * time >= ms_threshold:
+    def calculate_delta_time(self,tiempo_objetivo):
+        tiempo_actual = pygame.time.get_ticks()
+        tiempo_transcurrido = tiempo_actual - self.tiempo_inicial
+        if tiempo_transcurrido >= tiempo_objetivo:
             return True
         else:
-            return False  
+            return False
    
     def charge_attack(self):
         if self.direction == DIRECTION_R:
@@ -311,24 +317,35 @@ class Player:
                 break  # Si hay una colisión, no es necesario verificar los otros enemigos
         if collision_detected:
             if not self.colliding_enemy_flag:  # Verifica si ya estás colisionando con un enemigo
-                self.be_hurted()
+                self. be_hurted()
                 self.lives -= 1
                 print(self.lives)
                 self.colliding_enemy_flag = True  # Establece la bandera para indicar que estás colisionando con un enemigo
         else:
             self.colliding_enemy_flag = False
             
-    def collide_platform_sides(self, platform_list): 
+    def collide_platform_left_side(self, platform_list): 
         retorno = False
         for platform in platform_list:
             try:
-                if self.rect.colliderect(platform.rect_right_side_col) or self.rect.colliderect(platform.rect_left_side_col):
+                if self.rect.colliderect(platform.rect_left_side_col):
                     retorno = True
                     break
             except:
                 pass
         return retorno        
     
+    def collide_platform_right_side(self, platform_list): 
+        retorno = False
+        for platform in platform_list:
+            try:
+                if self.rect.colliderect(platform.rect_right_side_col):
+                    retorno = True
+                    break
+            except:
+                pass
+        return retorno 
+
     def collide_platform_bottom(self, platform_list): 
         retorno = False
         for platform in platform_list:
@@ -342,9 +359,15 @@ class Player:
     
     
     def be_hurted(self):
-        pass
-    '''CHEQUEAR 
-    if self.direction == DIRECTION_R:
-        self.animation = self.hurt_r
-    else:
-        self.animation = self.hurt_l'''
+        if self.direction == DIRECTION_R:
+            self.animation = self.hurt_r
+        else:
+            self.animation = self.hurt_l
+        
+    def boss_hurted(self):
+        if self.flag_boss_hurted:
+            #self.be_hurted()
+            if self.calculate_delta_time(300):
+                print("esta etrado aca")
+                self.move_y = 0
+                self.flag_boss_hurted = False
