@@ -6,8 +6,8 @@ from botin import Loot
 
 class Proyectile:
     def __init__(self,speed,x,y,direction,player_shoot=True) -> None:
-        self.sprite_left = Auxiliar.getSurfaceFromSpriteSheet("images/bullet01_l.png",1,1)[0]
-        self.sprite_right = Auxiliar.getSurfaceFromSpriteSheet("images/bullet01_r.png",1,1)[0]
+        self.sprite_left = Auxiliar.getSurfaceFromSpriteSheet(r"images\caracters\adventurer\arrow_l.png",1,1,scale=2)[0]
+        self.sprite_right = Auxiliar.getSurfaceFromSpriteSheet(r"images\caracters\adventurer\arrow_r.png",1,1,scale=2)[0]
         self.image = self.sprite_right
         self.rect = self.image.get_rect()
         self.rect.x = x

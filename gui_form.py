@@ -23,6 +23,7 @@ class Form():
         self.x = x
         self.y = y
 
+        
         if(self.color_background != None):
             self.surface.fill(self.color_background)
             

@@ -14,6 +14,7 @@ class Widget:
         if image_background != None:
             self.image_background = pygame.image.load(image_background)
             self.image_background = pygame.transform.scale(self.image_background,(w, h)).convert_alpha()
+            self.rect = self.image_background.get_rect()
         else:
             self.image_background = None
         self._text = text

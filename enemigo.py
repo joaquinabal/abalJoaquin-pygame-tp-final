@@ -22,7 +22,12 @@ class Enemy():
             self.walk_r = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_r.png",8,1,scale=DEFAULT_ENEMY_SIZE)
             self.walk_l =  Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_l.png",8,1,scale=DEFAULT_ENEMY_SIZE)
             self.stay_r = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_l.png",8,1,scale=DEFAULT_ENEMY_SIZE)
-            self.stay_l = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_r.png",8,1,scale=DEFAULT_ENEMY_SIZE) 
+            self.stay_l = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/oneye_walk_r.png",8,1,scale=DEFAULT_ENEMY_SIZE)  
+        elif enemy_type == 2: #SKELETON:
+            self.walk_r = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/skeleton_walk_r.png",4,1,scale=DEFAULT_ENEMY_SIZE)
+            self.walk_l =  Auxiliar.getSurfaceFromSpriteSheet("images/enemies/skeleton_walk_l.png",4,1,scale=DEFAULT_ENEMY_SIZE)
+            self.stay_r = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/skeleton_walk_l.png",4,1,scale=DEFAULT_ENEMY_SIZE)
+            self.stay_l = Auxiliar.getSurfaceFromSpriteSheet("images/enemies/skeleton_walk_r.png",4,1,scale=DEFAULT_ENEMY_SIZE) 
         self.contador = 0
         self.frame = 0
         self.lives = 5

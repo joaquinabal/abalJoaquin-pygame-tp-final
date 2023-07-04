@@ -21,19 +21,16 @@ class FormGameLevel2(Form):
         self.levels = config_json
         self.player_1 = self.generate_player()
         self.music_path = r"music/boss_music.wav"
-        Auxiliar.generar_musica(self.music_path,10)
         
         
         # --- GUI WIDGET --- 
-        self.boton1 = Button(master=self,x=0,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="BACK",font="Verdana",font_size=30,font_color=C_WHITE)
-        self.boton2 = Button(master=self,x=200,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_B",text="PAUSE",font="Verdana",font_size=30,font_color=C_WHITE)
-        self.boton_shoot = Button(master=self,x=400,y=0,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_shoot,on_click_param="form_menu_B",text="SHOOT",font="Verdana",font_size=30,font_color=C_WHITE)
+        self.boton1 = Button(master=self,x=50,y=50,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_principal",text="BACK",font="Verdana",font_size=30,font_color=C_WHITE)
        
         self.text_score = Label(master=self,x=200,y=100,w=200,h=50,color_background=None,color_border=None,image_background=None,
                             text=f'SCORE: {str(self.player_1.score)}',font='Arial',font_size=30,font_color=C_WHITE)
        
         self.pb_lives = ProgressBar(master=self,x=250,y=50,w=150,h=30,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment05.png",value = self.player_1.lives, value_max=5)
-        self.widget_list = [self.boton1,self.boton2,self.text_score,self.pb_lives,self.boton_shoot]
+        self.widget_list = [self.boton1,self.text_score,self.pb_lives]
 
         # --- GAME ELEMNTS --- 
         self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/forest/forest.png")
@@ -106,6 +103,33 @@ class FormGameLevel2(Form):
         self.player_1.update(delta_ms,self.platform_list,self.enemies_list)
 
         self.pb_lives.value = self.player_1.lives 
+
+        if self.player_1.score > 1000:
+            self.reiniciar_nivel()
+            self.set_active("form_game_L3")
+                
+        if self.player_1.lives < 1:
+            self.reiniciar_nivel()
+            self.set_active("form_menu_principal")
+            
+    def on_click_boton1(self, parametro):
+        print("entro")
+        self.reiniciar_nivel()
+        self.set_active("form_menu_principal") 
+           
+            
+        
+    def reiniciar_nivel(self):
+        self.player_1 = self.generate_player()
+        self.boss = None
+        self.platform_list = []
+        self.enemies_list = []
+        self.bullet_list = []
+        self.proyectile_list = []
+        self.proyectile_enemy_list = []   
+        self.loot_list = []
+        self.generate_enemies()
+        self.generate_platform()
 
 
     def draw(self): 

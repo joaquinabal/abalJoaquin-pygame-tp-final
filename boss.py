@@ -20,6 +20,7 @@ class Boss():
         
         self.flag_spawn = True
         self.flag_still_alive = True
+        self.flag_death = False
         
         self.animation = self.spawn
         self.direction = DIRECTION_R
@@ -73,9 +74,6 @@ class Boss():
                 player.tiempo_inicial = pygame.time.get_ticks()
                 player.lives -= 1
                 player.move_y = -20
-            # if player.rect.y < 525:
-            #     print("aja?")
-            #     player.move_y = 0
                 player.flag_boss_hurted = True
             print(player.lives)
             self.generate_enemy(enemies_list,player)
@@ -124,9 +122,10 @@ class Boss():
             print(self.frame)
             self.frame = 0
             self.animation = self.stay_death
+            self.flag_death = True
             
     def generate_enemy(self,enemies_list,player):
-        enemies_list.append(Enemy(x=player.rect.x,y=0,speed_walk=4,speed_run=8,gravity=20,jump_power=10,frame_rate_ms=80,move_rate_ms=80,jump_height=100,x_length=50,x_moving=1,p_scale=1,interval_time_jump=100,enemy_type=0))
+        enemies_list.append(Enemy(x=player.rect.x,y=0,speed_walk=4,speed_run=8,gravity=20,jump_power=10,frame_rate_ms=80,move_rate_ms=80,jump_height=100,x_length=50,x_moving=1,p_scale=1,interval_time_jump=100,enemy_type=2))
         
                 
         
