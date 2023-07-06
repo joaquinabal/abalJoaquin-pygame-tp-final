@@ -15,6 +15,7 @@ Div E
 PYGAME SOULS es un juego de plataformas y acción 2D, en el cuál tu objetivo es avanzar en los niveles dentro del bosque oscuro, para poder derrotar al Rey Esqueleto.
 
 En este juego, controlas a Adventurer, un arquero cuyo pueblo fue destruido por los séquitos del Rey Esqueleto y que se encuentra con sed de venganza.
+https://raw.githubusercontent.com/joaquinabal/game_py_new/master/readme_images/adventurer.png
 ## Controles
 Para controlar a nuestro héroe, podremos utilizar las siguientes teclas:
 
@@ -53,15 +54,19 @@ A su vez, cada nivel tiene un tiempo de 120 segundos, en el caso de que el tiemp
 ## Enemigos
 
 ### - Mushroom:
+https://raw.githubusercontent.com/joaquinabal/game_py_new/master/readme_images/mushroom.png
 Estos hongos eran amigos del bosque, pero fueron corrompidos por el Rey Esqueleto, cuidado al tocarlos!
 
 ### - Ojo Volador:
+https://raw.githubusercontent.com/joaquinabal/game_py_new/master/readme_images/oneye.png
 Estos esbirros fueron productos de una mutación en los murciélagos de la zona, suelen volar en busca de un enemigo. Si te llegan a ver, te dispararán!
 
 ### - Esqueleto:
+https://raw.githubusercontent.com/joaquinabal/game_py_new/master/readme_images/skeleton.png
 Soldados leales del Rey Esqueleto. Aparecen cada vez que el Rey Esqueleto golpea el piso.
 
 ### - Rey Esqueleto
+https://raw.githubusercontent.com/joaquinabal/game_py_new/master/readme_images/boss.png
 El Jefe Final. Es considerado el culpable de la corrupción del bosque. No te perseguirá, no cree necesario hacer ese esfuerzo, en cambio, golpeará el piso con tal fuerza que te lanzará por los aires. 
 ## Consumibles
 ### - Monedas
@@ -69,3 +74,5 @@ Las monedas son el botín proveniente de la muerte de tus enemigos. Las monedas 
 
 ### Corazón Corrompido
 Aunque parezcan que nos ayudarán a curarnos, estos corazones ya fueron corrompidos por el Rey Esqueleto. Si llegamos a tocar uno, perderemos una vida.
+
+
