@@ -5,7 +5,7 @@ from auxiliar import Auxiliar
 
 class Loot:
     def __init__(self,x,y,y_length) -> None:
-        self.sprite = Auxiliar.getSurfaceFromSpriteSheet("images/bullet01_l.png",1,1)[0]
+        self.sprite = Auxiliar.getSurfaceFromSpriteSheet("images\consumable\coin_points.png",1,1,scale=2)[0]
         self.image = self.sprite
         self.rect = self.image.get_rect()
         self.rect.x = x

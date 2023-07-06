@@ -6,8 +6,12 @@ from botin import Loot
 
 class Proyectile:
     def __init__(self,speed,x,y,direction,player_shoot=True) -> None:
-        self.sprite_left = Auxiliar.getSurfaceFromSpriteSheet(r"images\caracters\adventurer\arrow_l.png",1,1,scale=2)[0]
-        self.sprite_right = Auxiliar.getSurfaceFromSpriteSheet(r"images\caracters\adventurer\arrow_r.png",1,1,scale=2)[0]
+        if player_shoot:
+            self.sprite_left = Auxiliar.getSurfaceFromSpriteSheet(r"images\caracters\adventurer\arrow_l.png",1,1,scale=2)[0]
+            self.sprite_right = Auxiliar.getSurfaceFromSpriteSheet(r"images\caracters\adventurer\arrow_r.png",1,1,scale=2)[0]
+        else:
+            self.sprite_left = Auxiliar.getSurfaceFromSpriteSheet(r"images\enemies\enemy_proyectile.png",1,1,scale=2)[0]
+            self.sprite_right = Auxiliar.getSurfaceFromSpriteSheet(r"images\enemies\enemy_proyectile.png",1,1,scale=2)[0]
         self.image = self.sprite_right
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -37,6 +41,7 @@ class Proyectile:
         if self.player_shoot:
             for enemy in enemy_list:
                 if self.rect.colliderect(enemy.rect):
+                    ENEMY_HURTED.play()
                     enemy_list.remove(enemy)
                     player.score += 100
                     loot = Loot(enemy.rect.x, enemy.rect.bottom,15)
@@ -45,12 +50,12 @@ class Proyectile:
             try:
                 if self.rect.colliderect(boss.rect):
                     proyectile_list.remove(proyectile)
-                    boss.suffer_damage()
+                    boss.suffer_damage(player)
             except:
                 pass
         else:
             if self.rect.colliderect(player.rect):
-                player.lives -= 1
+                player.discount_live()
                 proyectile_list.remove(proyectile)
                 
         for platform in platform_list:

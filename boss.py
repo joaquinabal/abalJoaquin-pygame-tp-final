@@ -60,24 +60,21 @@ class Boss():
         screen.blit(self.image,self.rect)
         
     def receive_shoot(self):
+        BOSS_HURTED.play()
         self.lives -= 1
         
     def do_attack(self,player,enemies_list):
         if self.calculate_delta_time(7000) and self.animation == self.stay:
-            print("entro al ataque")
-            self.animation = self.attack
-            
+            self.animation = self.attack            
             self.tiempo_inicial = pygame.time.get_ticks()
         if self.animation == self.attack and self.frame == len(self.animation) - 1:
             if player.rect.y > 575:
-                print("golpeao")
                 player.tiempo_inicial = pygame.time.get_ticks()
-                player.lives -= 1
+                player.discount_live()
                 player.move_y = -20
                 player.flag_boss_hurted = True
-            print(player.lives)
+            BOSS_ATTACK.play()
             self.generate_enemy(enemies_list,player)
-            print("entra a stay")
             self.frame = 0
             self.animate_stay()
 
@@ -100,32 +97,31 @@ class Boss():
     def animate_stay(self):
         self.animation = self.stay
         
-    def suffer_damage(self):
+    def suffer_damage(self,player):
         self.frame = 0
         self.animation = self.dmg
         self.lives -= 1
-        print(self.lives)
+        player.score += 200
         
     def stop_suffering_dmg(self):
         if self.animation == self.dmg and self.frame == len(self.animation) - 1:
-            print("entra a stay")
             self.frame = 0
             self.animate_stay()
             
     def animate_death(self):
         if self.flag_still_alive:
             if self.lives < 1:
+                BOSS_DIED.play()
                 self.animation = self.death
                 self.flag_still_alive = False
         if self.animation == self.death and self.frame == len(self.animation) - 1 and not self.flag_still_alive:
-            print("entra al death")
             print(self.frame)
             self.frame = 0
             self.animation = self.stay_death
             self.flag_death = True
             
     def generate_enemy(self,enemies_list,player):
-        enemies_list.append(Enemy(x=player.rect.x,y=0,speed_walk=4,speed_run=8,gravity=20,jump_power=10,frame_rate_ms=80,move_rate_ms=80,jump_height=100,x_length=50,x_moving=1,p_scale=1,interval_time_jump=100,enemy_type=2))
+        enemies_list.append(Enemy(x=player.rect.x,y=0,speed_walk=4,speed_run=8,gravity=40,jump_power=10,frame_rate_ms=80,move_rate_ms=80,jump_height=100,x_length=50,x_moving=1,p_scale=1,interval_time_jump=100,enemy_type=2))
         
                 
         

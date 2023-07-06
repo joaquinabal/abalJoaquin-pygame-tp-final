@@ -168,8 +168,8 @@ class Enemy():
     def attack(self,player,proyectile_list):
         if self.x_moving == 0:
             if player.rect.y in range(self.rect.y-10,self.rect.y+10):
-                if self.flag_attack:         
-                    print("asd")
+                if self.flag_attack:  
+                    ENEMY_ATTACK.play()       
                     if self.direction == DIRECTION_R:
                         self.create_proyectile(proyectile_list,self.rect.right,self.rect.centery)
                     else:
@@ -177,7 +177,6 @@ class Enemy():
                     self.flag_attack = False
             else:
                 if self.calculate_delta_time(5000):
-                    print("funca")
                     self.flag_attack = True
                     self.tiempo_inicial = pygame.time.get_ticks()
     

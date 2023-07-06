@@ -15,7 +15,7 @@ class Player:
         self.stay_l = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_stay_l.png",3,1,scale=3)  
         self.jump_r = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_jump_r.png",15,1,scale=3)  
         self.jump_l = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_jump_l.png",15,1,scale=3)  
-        self.atk_stance_r = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_atk_stance_r.png",5,1,scale=3)  
+        self.atk_stance_r = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_atk_stance_l.png",5,1,flip=True,scale=3)  
         self.atk_stance_l = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_atk_stance_l.png",5,1,scale=3) 
         self.charge_r = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_charge_r.png",1,1,scale=3)  
         self.charge_l = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_charge_l.png",1,1,scale=3)   
@@ -64,12 +64,10 @@ class Player:
         self.atk_stance_flag = False
         self.tiempo_transcurrido = 0
         
-
         self.tiempo_inicial = pygame.time.get_ticks()
-                
-        self.font_score = pygame.font.Font(None, 32)
 
         self.flag_boss_hurted = False
+        self.flag_hurted = False
 
     def walk(self,direction):
         if(self.is_jump == False and self.is_fall == False):
@@ -111,6 +109,7 @@ class Player:
     def jump(self,platform_list,on_off = True):
         if(on_off and self.is_jump == False and self.is_fall == False):
             self.y_start_jump = self.rect.y
+            ADV_JUMP.play()
             if(self.direction == DIRECTION_R):
                 self.move_x = int(self.move_x / 1.5)
                 self.move_y = -self.jump_power
@@ -154,11 +153,9 @@ class Player:
             self.tiempo_transcurrido_move = 0
 
             if(abs(self.y_start_jump - self.rect.y) > self.jump_height and self.is_jump):
-                self.move_y = 0
-          
+                self.move_y = 0        
             self.change_x(self.move_x)
             self.change_y(self.move_y)
-
             if(not self.is_on_plataform(plataform_list)):
                 if(self.move_y == 0):
                     self.is_fall = True
@@ -174,15 +171,8 @@ class Player:
                 self.move_x = 0
                 self.change_x(5)
             if  self.collide_platform_bottom(plataform_list):
-                print("colision bottom")
                 self.move_y = 0
                 
-            
-
-    def show_score(self):
-        score_count = self.font_score.render('SCORE: {0}'.format(self.score), True, C_WHITE, None)
-        return score_count
-
     def is_on_plataform(self,plataform_list):
         retorno = False
         
@@ -223,8 +213,6 @@ class Player:
         except IndexError:
             print("IndexError")
         screen.blit(self.imagen, self.rect)
-        screen.blit(self.show_score(), SCORE_POSITION)
-        
 
     def events(self,delta_ms,keys,event,proyectile_list,platform_list):
         self.tiempo_transcurrido += delta_ms
@@ -274,7 +262,6 @@ class Player:
             if self.atk_stance_flag == False:
                 self.tiempo_trans = pygame.time.get_ticks()
                 self.atk_stance_flag = True
-            print(self.atk_stance_flag)
             tiempo_actual = pygame.time.get_ticks()
             if tiempo_actual - self.tiempo_trans >= tiempo_obj:
                 return True
@@ -291,12 +278,15 @@ class Player:
             return False
    
     def charge_attack(self):
+        self.frame = 0
         if self.direction == DIRECTION_R:
             self.animation = self.charge_r
         else:
             self.animation = self.charge_l        
 
     def attack(self):
+        self.frame = 0
+        ADV_ATTACK.play()
         if self.direction == DIRECTION_R:
             self.animation = self.atk_r
         else:
@@ -304,6 +294,7 @@ class Player:
             
     def atk_stance(self):
         #print("atk stance")
+        self.frame = 0
         if self.direction == DIRECTION_R:
             self.animation = self.atk_stance_r
         else:
@@ -317,9 +308,8 @@ class Player:
                 break  # Si hay una colisión, no es necesario verificar los otros enemigos
         if collision_detected:
             if not self.colliding_enemy_flag:  # Verifica si ya estás colisionando con un enemigo
-                self. be_hurted()
-                self.lives -= 1
-                print(self.lives)
+                self.be_hurted()
+                self.discount_live()
                 self.colliding_enemy_flag = True  # Establece la bandera para indicar que estás colisionando con un enemigo
         else:
             self.colliding_enemy_flag = False
@@ -368,6 +358,11 @@ class Player:
         if self.flag_boss_hurted:
             #self.be_hurted()
             if self.calculate_delta_time(300):
-                print("esta etrado aca")
                 self.move_y = 0
                 self.flag_boss_hurted = False
+                
+    def discount_live(self):
+        ADV_HURTED.play()
+        self.flag_hurted = True
+        self.lives -= 1
+        

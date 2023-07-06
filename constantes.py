@@ -1,3 +1,6 @@
+import pygame
+pygame.mixer.init()
+
 ANCHO_VENTANA = 1500
 ALTO_VENTANA = 800
 GROUND_LEVEL = 700
@@ -12,6 +15,8 @@ DIRECTION_R = 1
 GROUND_COLLIDE_H = 8 # Aprox Gravedad/2 + 1
 GROUND_RECT_H = 10
 DEBUG = False
+
+TIME_DAMAGE = 2000
 
 # COLOR CONSTANTS
 C_RED = (255,0,0)
@@ -32,3 +37,13 @@ M_STATE_HOVER = 1
 M_STATE_CLICK = 3
 M_BRIGHT_HOVER = (32,32,32)
 M_BRIGHT_CLICK = (32,32,32)
+
+# SOUNDS
+ADV_ATTACK = pygame.mixer.Sound(r"sounds\adv_attack.wav")
+ADV_JUMP = pygame.mixer.Sound(r"sounds\adv_jump.wav")
+ADV_HURTED = pygame.mixer.Sound(r"sounds\adv_hurted.wav")
+ENEMY_ATTACK = pygame.mixer.Sound(r"sounds\enemy_attack.wav")
+ENEMY_HURTED = pygame.mixer.Sound(r"sounds\enemy_hurted.wav")
+BOSS_ATTACK = pygame.mixer.Sound(r"sounds\boss_attack.wav")
+BOSS_HURTED = pygame.mixer.Sound(r"sounds\enemy_hurted.wav")
+BOSS_DIED = pygame.mixer.Sound(r"sounds\boss_died.wav")

@@ -12,6 +12,7 @@ from background import Background
 from bullet import Bullet
 from gui_label import Label
 from auxiliar import Auxiliar
+from consumable import Consumable
 
 class FormGameLevel1(Form):
     def __init__(self,name,master_surface,x,y,w,h,color_background,color_border,active,config_json):
@@ -20,18 +21,27 @@ class FormGameLevel1(Form):
         self.levels = config_json
         self.player_1 = self.generate_player()
         self.music_path = r"music/lvl1_music.wav"
-        
+        self.music_menu = r"music/title_theme.wav"
+        self.tiempo_inicial = pygame.time.get_ticks()
+        self.music = True
+        self.cronometro = 120
+        self.score_total = 0
 
-        
+
         # --- GUI WIDGET --- 
-        self.button_menu = Button(master=self,x=50,y=50,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Buttons/Button_M_02.png",on_click=self.on_click_boton1,on_click_param="form_menu_principal",text="MENU",font="Verdana",font_size=30,font_color=C_WHITE)
+        self.button_menu = Button(master=self,x=50,y=50,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Buttons/Button_M_06.png",on_click=self.on_click_boton1,on_click_param="form_menu_principal",text="MENU",font="Verdana",font_size=30,font_color=C_WHITE)
     
         
         self.text_score = Label(master=self,x=200,y=100,w=200,h=50,color_background=None,color_border=None,image_background=None,
                                   text=f'SCORE: {str(self.player_1.score)}',font='Arial',font_size=30,font_color=C_WHITE)
+        
+        self.text_time = Label(master=self,x=900,y=100,w=200,h=50,color_background=None,color_border=None,image_background=None,
+                                  text=f'TIME: {str(self.cronometro)}',font='Arial',font_size=30,font_color=C_WHITE)
+        
+        
        
-        self.pb_lives = ProgressBar(master=self,x=250,y=50,w=150,h=30,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Comic_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment05.png",value = self.player_1.lives, value_max=5)
-        self.widget_list = [self.button_menu,self.text_score,self.pb_lives]
+        self.pb_lives = ProgressBar(master=self,x=250,y=50,w=150,h=30,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Data_Border/Bars/Bar_Segment05.png",value = self.player_1.lives, value_max=5)
+        self.widget_list = [self.button_menu,self.text_score,self.text_time,self.pb_lives]
         # --- GAME ELEMNTS --- 
         self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/forest/forest.png")
 
@@ -43,6 +53,9 @@ class FormGameLevel1(Form):
         self.platform_list = []
         self.generate_platform()
 
+        self.consumable_list = []
+        self.generate_consumables()
+        
         self.proyectile_list = []
         self.bullet_list = []
         self.proyectile_enemy_list = []
@@ -72,6 +85,11 @@ class FormGameLevel1(Form):
         for platform in data_platforms:
             self.platform_list.append(Plataform(x=platform["x"],y=platform["y"],height=platform["height"],width=platform["width"],
                             image=platform["image"],column=platform["column"]))
+            
+    def generate_consumables(self):
+        data_consumables = self.levels[0]["consumable"]
+        for consumable in data_consumables:
+            self.consumable_list.append(Consumable(x=consumable["x"],y=consumable["y"]))
 
 
 
@@ -82,8 +100,11 @@ class FormGameLevel1(Form):
         for enemy_element in self.enemies_list:
             self.bullet_list.append(Bullet(enemy_element,enemy_element.rect.centerx,enemy_element.rect.centery,self.Enemy_1.rect.centerx,self.Enemy_1.rect.centery,20,path="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment05.png",frame_rate_ms=100,move_rate_ms=20,width=5,height=5))    
 
-    def update(self, lista_eventos,keys,delta_ms,event):
+    def update(self,lista_eventos,keys,delta_ms,event,evento_1000ms):
         
+        if self.music:
+            Auxiliar.generar_musica(self.music_path,0.1)
+            self.music = False
         
         for aux_widget in self.widget_list:
             aux_widget.update(lista_eventos)
@@ -100,29 +121,49 @@ class FormGameLevel1(Form):
         for loot_element in self.loot_list:
             loot_element.update(self.player_1, self.loot_list, loot_element,self.platform_list)
             
+        for consumable_element in self.consumable_list:
+            consumable_element.update(self.player_1, self.consumable_list, consumable_element)
+            
+        self.descontar_tiempo(lista_eventos,evento_1000ms)
 
+        self.score_total = self.player_1.score
+        
         self.text_score._text = f'SCORE: {str(self.player_1.score)}'
+        self.text_time._text = f'TIME: {str(self.cronometro)}'
         self.player_1.events(delta_ms,keys,event,self.bullet_list,self.platform_list)
         self.player_1.update(delta_ms,self.platform_list,self.enemies_list)
 
         self.pb_lives.value = self.player_1.lives 
 
         if self.player_1.score > 1000:
+            self.score_total = self.player_1.score
+            print(self.score_total)
             self.reiniciar_nivel()
             self.set_active("form_game_L2")
                 
-        if self.player_1.lives < 1:
+        if self.player_1.lives < 1 or self.cronometro < 1:
+            self.score_total = 0
             self.reiniciar_nivel()
+            self.reproducir_musica(self.music_menu)
             self.set_active("form_menu_principal")
             
+        self.daño_background()
+            
     def on_click_boton1(self, parametro):
-        print("entro")
         self.reiniciar_nivel()
+        self.reproducir_musica(self.music_menu)
+        self.music = True
         self.set_active("form_menu_principal") 
            
+    def descontar_tiempo(self,lista_eventos,evento_1000ms):
+        for event in lista_eventos:
+            if event.type == evento_1000ms:
+                self.cronometro -= 1  
             
-        
     def reiniciar_nivel(self):
+
+        self.cronometro = 120
+        self.music = True
         self.player_1 = self.generate_player()
         self.boss = None
         self.platform_list = []
@@ -131,8 +172,32 @@ class FormGameLevel1(Form):
         self.proyectile_list = []
         self.proyectile_enemy_list = []   
         self.loot_list = []
+        self.consumable_list = []
+        self.generate_consumables()
         self.generate_enemies()
         self.generate_platform()
+
+    def reproducir_musica(self,music_path):
+        if self.music:
+            Auxiliar.generar_musica(music_path,0.1)
+            self.music = False
+        
+    def daño_background(self):
+        if self.player_1.flag_hurted:
+            self.static_background = Background(x=0,y=0,width=self.w,height=self.h,path="images/locations/forest/forest_dmg.png")
+            
+        if self.calculate_delta_time(TIME_DAMAGE):
+            self.player_1.flag_hurted = False
+            self.static_background = Background(x=0,y=0,width=self.w,height=self.h,path="images/locations/forest/forest.png")
+            self.tiempo_inicial = pygame.time.get_ticks()
+                
+    def calculate_delta_time(self,tiempo_objetivo):
+        tiempo_actual = pygame.time.get_ticks()
+        tiempo_transcurrido = tiempo_actual - self.tiempo_inicial
+        if tiempo_transcurrido >= tiempo_objetivo:
+            return True
+        else:
+            return False
 
         
     def draw(self): 
@@ -159,3 +224,6 @@ class FormGameLevel1(Form):
             
         for loot_element in self.loot_list:
             loot_element.draw(self.surface)
+            
+        for consumable_element in self.consumable_list:
+            consumable_element.draw(self.surface)
