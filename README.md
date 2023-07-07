@@ -70,10 +70,12 @@ Soldados leales del Rey Esqueleto. Aparecen cada vez que el Rey Esqueleto golpea
 
 El Jefe Final. Es considerado el culpable de la corrupción del bosque. No te perseguirá, no cree necesario hacer ese esfuerzo, en cambio, golpeará el piso con tal fuerza que te lanzará por los aires. 
 ## Consumibles
-### - Monedas
+### - Monedas ![coin_points](https://github.com/joaquinabal/pygame_pp1_lab_joaquin_abal/assets/88854241/4305e808-7f3c-4041-b96d-14a1a00229a5)
+
 Las monedas son el botín proveniente de la muerte de tus enemigos. Las monedas suman 300 puntos.
 
-### Corazón Corrompido
+### Corazón Corrompido ![bad_heart](https://github.com/joaquinabal/pygame_pp1_lab_joaquin_abal/assets/88854241/b7ede235-1f0b-4515-9e79-3fd34fdb32fd)
+
 Aunque parezcan que nos ayudarán a curarnos, estos corazones ya fueron corrompidos por el Rey Esqueleto. Si llegamos a tocar uno, perderemos una vida.
 
 
