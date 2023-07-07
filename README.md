@@ -38,16 +38,7 @@ Nuestro héroe posee 5 vidas. Hay varias maneras de perder una vida:
 Sabrás que habrás perdido una vida, porque el escenario tomará un color rojizo.
 
 A su vez, cada nivel tiene un tiempo de 120 segundos, en el caso de que el tiempo llegue a cero, perderás el nivel y volverás al menu principal.
-## Cómo perder
-Nuestro héroe posee 5 vidas. Hay varias maneras de perder una vida:
 
-- Al tocar o ser tocado por un enemigo.
-- Al recibir un proyectil de un enemigo.
-- Al encontrarnos en el piso cuando el Rey Esqueleto golpea el piso.
-
-Sabrás que habrás perdido una vida, porque el escenario tomará un color rojizo.
-
-A su vez, cada nivel tiene un tiempo de 120 segundos, en el caso de que el tiempo llegue a cero, perderás el nivel y volverás al menu principal.
 ## Enemigos
 
 ### - Mushroom:
