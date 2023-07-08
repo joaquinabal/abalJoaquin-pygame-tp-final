@@ -28,6 +28,12 @@ class FormGameLevel1(Form):
         self.font = pygame.font.SysFont("Verdana",50)
 
         # --- GUI WIDGET --- 
+        self.text_lvl = Label(master=self,x=75,y=30,w=200,h=50,color_background=None,color_border=None,image_background=None,
+                                  text="LEVEL 1",font='Arial',font_size=30,font_color=C_WHITE)
+        
+        self.text_required_score = Label(master=self,x=90,y=75,w=300,h=50,color_background=None,color_border=None,image_background=None,
+                                  text=f'NEXT LEVEL: 1000 POINTS',font='Arial',font_size=20,font_color=C_WHITE)
+        
         self.button_menu = Button(master=self,x=1275,y=725,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Buttons/Button_M_06.png",on_click=self.on_click_boton1,on_click_param="form_menu_principal",text="MENU",font="Verdana",font_size=30,font_color=C_WHITE)
          
         self.text_score = Label(master=self,x=1200,y=30,w=200,h=50,color_background=None,color_border=None,image_background=None,
@@ -38,7 +44,7 @@ class FormGameLevel1(Form):
         
         self.pb_lives = ProgressBar(master=self,x=1000,y=50,w=150,h=30,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Data_Border/Bars/Bar_Segment05.png",value = self.player_1.lives, value_max=5)
         
-        self.widget_list = [self.button_menu,self.text_score,self.text_time,self.pb_lives]
+        self.widget_list = [self.text_lvl,self.text_required_score,self.button_menu,self.text_score,self.text_time,self.pb_lives]
         
         # --- GAME ELEMNTS --- 
         self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/forest/forest.png")

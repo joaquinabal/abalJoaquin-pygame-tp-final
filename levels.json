@@ -104,11 +104,11 @@
                     "p_scale":0.08,
                     "interval_time_jump": 300,
                     "enemy_type": 0,
-                    "x_length": 50,
+                    "x_length": 200,
                     "x_moving": 1
                 },
                 {
-                    "x": 1000,
+                    "x": 1100,
                     "y": 200,
                     "speed_walk": 8,
                     "speed_run": 8,
@@ -120,7 +120,7 @@
                     "p_scale":0.08,
                     "interval_time_jump": 300,
                     "enemy_type": 1,
-                    "x_length": 200,
+                    "x_length": 100,
                     "x_moving": 0
 
                 }
