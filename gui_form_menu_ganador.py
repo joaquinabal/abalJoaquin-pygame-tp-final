@@ -18,22 +18,19 @@ class FormMenuWin(Form):
         self.score = 0
 
 
-        self.title = Label(master=self,x=500,y=100,w=700,h=100,text="HAS GANADO",color_border=None,font="Verdana",font_size=80,font_color=C_WHITE)
-        self.score_label =  Label(master=self,x=500,y=250,w=400,text=f"SCORE: {self.score}",color_border=None,font="Verdana",font_size=40,font_color=C_ORANGE)
-        self.nombre_jugador = TextBox(master=self,x=500,y=350,w=400,color_background=C_WHITE,color_border=None,image_background=None,text="jugador",font_size=40,font_color=C_BLACK,)
-        self.boton_guardar = Button(master=self,x=500,y=500,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Buttons/Button_M_06.png",on_click=self.on_click_boton_guardar,on_click_param=None,text="GUARDAR",font="Verdana",font_size=25,font_color=C_WHITE)
-        self.boton_menu = Button(master=self,x=200,y=600,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Buttons/Button_M_06.png",on_click=self.on_click_boton3,on_click_param="form_menu_principal",text="Menu",font="Verdana",font_size=30,font_color=C_WHITE)                                
+        self.title = Label(master=self,x=375,y=100,w=700,h=100,text="HAS GANADO",color_border=None,font="Verdana",font_size=80,font_color=C_WHITE)
+        self.score_label =  Label(master=self,x=525,y=250,w=400,text=f"SCORE: {self.score}",color_border=None,font="Verdana",font_size=40,font_color=C_ORANGE)
+        self.nombre_jugador = TextBox(master=self,x=525,y=350,w=400,color_background=C_WHITE,color_border=None,image_background=None,text="jugador",font_size=40,font_color=C_BLACK,)
+        self.boton_guardar = Button(master=self,x=650,y=450,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Buttons/Button_M_06.png",on_click=self.on_click_boton_guardar,on_click_param=None,text="GUARDAR",font="Verdana",font_size=25,font_color=C_WHITE)
+        self.button_menu = Button(master=self,x=1275,y=725,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Buttons/Button_M_06.png",on_click=self.on_click_boton3,on_click_param="form_menu_principal",text="MENU",font="Verdana",font_size=30,font_color=C_WHITE)
      
-        self.lista_widget = [self.score_label,self.nombre_jugador,self.boton_guardar,self.title,self.boton_menu]
+        self.lista_widget = [self.score_label,self.nombre_jugador,self.boton_guardar,self.title,self.button_menu]
 
     def on_click_boton_guardar(self, parametro):
         Sql.crear_tabla()
         Sql.actualizar_tabla(self.nombre_jugador._text,self.score)
         Sql.devolver_puntaje()
         self.set_active("form_menu_principal")
- 
-    def on_click_boton2(self, parametro):
-        self.pb1.value -= 1
     
     def on_click_boton3(self, parametro):
         self.set_active(parametro)

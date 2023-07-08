@@ -12,7 +12,7 @@ class Player:
         self.walk_r = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_walk_r.png",6,1,scale=3)
         self.walk_l = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_walk_l.png",6,1,scale=3)  
         self.stay_r = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_stay_r.png",3,1,scale=3)
-        self.stay_l = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_stay_l.png",3,1,scale=3)  
+        self.stay_l = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_stay_r.png",3,1,flip=True,scale=3)  
         self.jump_r = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_jump_r.png",15,1,scale=3)  
         self.jump_l = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_jump_l.png",15,1,scale=3)  
         self.atk_stance_r = Auxiliar.getSurfaceFromSpriteSheet("images/caracters/adventurer/adv_atk_stance_l.png",5,1,flip=True,scale=3)  
@@ -96,16 +96,6 @@ class Player:
     def receive_shoot(self):
         self.lives -= 1
 
-    def knife(self,on_off = True):
-        self.is_knife = on_off
-        if(on_off == True and self.is_jump == False and self.is_fall == False):
-            if(self.animation != self.knife_r and self.animation != self.knife_l):
-                self.frame = 0
-                if(self.direction == DIRECTION_R):
-                    self.animation = self.knife_r
-                else:
-                    self.animation = self.knife_l      
-
     def jump(self,platform_list,on_off = True):
         if(on_off and self.is_jump == False and self.is_fall == False):
             self.y_start_jump = self.rect.y
@@ -164,10 +154,10 @@ class Player:
                 if (self.is_jump): 
                     self.jump(plataform_list,False)
                 self.is_fall = False            
-            if self.collide_platform_left_side(plataform_list):
+            if self.collide_platform_left_side(plataform_list) or self.rect.x >= 1400:
                 self.move_x = 0
                 self.change_x(-5)
-            elif self.collide_platform_right_side(plataform_list):
+            elif self.collide_platform_right_side(plataform_list) or self.rect.x <= 0:
                 self.move_x = 0
                 self.change_x(5)
             if  self.collide_platform_bottom(plataform_list):

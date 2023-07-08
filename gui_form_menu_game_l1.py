@@ -3,13 +3,11 @@ from pygame.locals import *
 from constantes import *
 from gui_form import Form
 from gui_button import Button
-from gui_textbox import TextBox
 from gui_progressbar import ProgressBar
 from player import Player
 from enemigo import Enemy
 from plataforma import Plataform
 from background import Background
-from bullet import Bullet
 from gui_label import Label
 from auxiliar import Auxiliar
 from consumable import Consumable
@@ -26,22 +24,22 @@ class FormGameLevel1(Form):
         self.music = True
         self.cronometro = 120
         self.score_total = 0
-
+        self.pausado = False
+        self.font = pygame.font.SysFont("Verdana",50)
 
         # --- GUI WIDGET --- 
-        self.button_menu = Button(master=self,x=50,y=50,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Buttons/Button_M_06.png",on_click=self.on_click_boton1,on_click_param="form_menu_principal",text="MENU",font="Verdana",font_size=30,font_color=C_WHITE)
-    
-        
-        self.text_score = Label(master=self,x=200,y=100,w=200,h=50,color_background=None,color_border=None,image_background=None,
+        self.button_menu = Button(master=self,x=1275,y=725,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Buttons/Button_M_06.png",on_click=self.on_click_boton1,on_click_param="form_menu_principal",text="MENU",font="Verdana",font_size=30,font_color=C_WHITE)
+         
+        self.text_score = Label(master=self,x=1200,y=30,w=200,h=50,color_background=None,color_border=None,image_background=None,
                                   text=f'SCORE: {str(self.player_1.score)}',font='Arial',font_size=30,font_color=C_WHITE)
         
-        self.text_time = Label(master=self,x=900,y=100,w=200,h=50,color_background=None,color_border=None,image_background=None,
+        self.text_time = Label(master=self,x=1200,y=80,w=200,h=50,color_background=None,color_border=None,image_background=None,
                                   text=f'TIME: {str(self.cronometro)}',font='Arial',font_size=30,font_color=C_WHITE)
         
+        self.pb_lives = ProgressBar(master=self,x=1000,y=50,w=150,h=30,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Data_Border/Bars/Bar_Segment05.png",value = self.player_1.lives, value_max=5)
         
-       
-        self.pb_lives = ProgressBar(master=self,x=250,y=50,w=150,h=30,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Bars/Bar_Background01.png",image_progress="images/gui/set_gui_01/Data_Border/Bars/Bar_Segment05.png",value = self.player_1.lives, value_max=5)
         self.widget_list = [self.button_menu,self.text_score,self.text_time,self.pb_lives]
+        
         # --- GAME ELEMNTS --- 
         self.static_background = Background(x=0,y=0,width=w,height=h,path="images/locations/forest/forest.png")
 
@@ -57,7 +55,6 @@ class FormGameLevel1(Form):
         self.generate_consumables()
         
         self.proyectile_list = []
-        self.bullet_list = []
         self.proyectile_enemy_list = []
         self.loot_list = []
 
@@ -91,63 +88,65 @@ class FormGameLevel1(Form):
         for consumable in data_consumables:
             self.consumable_list.append(Consumable(x=consumable["x"],y=consumable["y"]))
 
-
-
-    def on_click_boton1(self, parametro):
-        self.set_active(parametro)
-
-    def on_click_shoot(self, parametro):
-        for enemy_element in self.enemies_list:
-            self.bullet_list.append(Bullet(enemy_element,enemy_element.rect.centerx,enemy_element.rect.centery,self.Enemy_1.rect.centerx,self.Enemy_1.rect.centery,20,path="images/gui/set_gui_01/Comic_Border/Bars/Bar_Segment05.png",frame_rate_ms=100,move_rate_ms=20,width=5,height=5))    
-
     def update(self,lista_eventos,keys,delta_ms,event,evento_1000ms):
+        for evento in lista_eventos:
+            if evento.type == pygame.KEYDOWN:
+                if evento.key == pygame.K_p:
+                    self.pausado = not self.pausado
         
-        if self.music:
-            Auxiliar.generar_musica(self.music_path,0.1)
-            self.music = False
+        if self.pausado:
         
-        for aux_widget in self.widget_list:
-            aux_widget.update(lista_eventos)
-
-        for bullet_element in self.bullet_list:
-            bullet_element.update(delta_ms,self.enemies_list,self.platform_list,self.bullet_list,bullet_element,self.player_1,self.loot_list,self.boss)
-            
-        for proyectile_enemy_element in self.proyectile_enemy_list:
-            proyectile_enemy_element.update(delta_ms,self.enemies_list,self.platform_list,self.proyectile_enemy_list,proyectile_enemy_element,self.player_1,self.loot_list,self.boss)
-
-        for enemy_element in self.enemies_list:
-            enemy_element.update(delta_ms,self.platform_list,self.player_1,self.proyectile_enemy_list)
-            
-        for loot_element in self.loot_list:
-            loot_element.update(self.player_1, self.loot_list, loot_element,self.platform_list)
-            
-        for consumable_element in self.consumable_list:
-            consumable_element.update(self.player_1, self.consumable_list, consumable_element)
-            
-        self.descontar_tiempo(lista_eventos,evento_1000ms)
-
-        self.score_total = self.player_1.score
+            pausa_texto = self.font.render("JUEGO EN PAUSA", True, (255, 255, 255))
+            self.surface.blit(pausa_texto, (self.w/2 - pausa_texto.get_width()/2, self.h/2 - pausa_texto.get_height()/2))
         
-        self.text_score._text = f'SCORE: {str(self.player_1.score)}'
-        self.text_time._text = f'TIME: {str(self.cronometro)}'
-        self.player_1.events(delta_ms,keys,event,self.bullet_list,self.platform_list)
-        self.player_1.update(delta_ms,self.platform_list,self.enemies_list)
+        else:
+        
+            if self.music:
+                Auxiliar.generar_musica(self.music_path,0.1)
+                self.music = False
+            
+            for aux_widget in self.widget_list:
+                aux_widget.update(lista_eventos)
 
-        self.pb_lives.value = self.player_1.lives 
-
-        if self.player_1.score > 1000:
-            self.score_total = self.player_1.score
-            print(self.score_total)
-            self.reiniciar_nivel()
-            self.set_active("form_game_L2")
+            for proyectile_element in self.proyectile_list:
+                proyectile_element.update(delta_ms,self.enemies_list,self.platform_list,self.proyectile_list,proyectile_element,self.player_1,self.loot_list,self.boss)
                 
-        if self.player_1.lives < 1 or self.cronometro < 1:
-            self.score_total = 0
-            self.reiniciar_nivel()
-            self.reproducir_musica(self.music_menu)
-            self.set_active("form_menu_principal")
+            for proyectile_enemy_element in self.proyectile_enemy_list:
+                proyectile_enemy_element.update(delta_ms,self.enemies_list,self.platform_list,self.proyectile_enemy_list,proyectile_enemy_element,self.player_1,self.loot_list,self.boss)
+
+            for enemy_element in self.enemies_list:
+                enemy_element.update(delta_ms,self.platform_list,self.player_1,self.proyectile_enemy_list)
+                
+            for loot_element in self.loot_list:
+                loot_element.update(self.player_1, self.loot_list, loot_element,self.platform_list)
+                
+            for consumable_element in self.consumable_list:
+                consumable_element.update(self.player_1, self.consumable_list, consumable_element)
+                
+            self.descontar_tiempo(lista_eventos,evento_1000ms)
+
+            self.score_total = self.player_1.score
             
-        self.daño_background()
+            self.text_score._text = f'SCORE: {str(self.player_1.score)}'
+            self.text_time._text = f'TIME: {str(self.cronometro)}'
+            self.player_1.events(delta_ms,keys,event,self.proyectile_list,self.platform_list)
+            self.player_1.update(delta_ms,self.platform_list,self.enemies_list)
+
+            self.pb_lives.value = self.player_1.lives 
+
+            if self.player_1.score > 1000:
+                self.score_total = self.player_1.score
+                print(self.score_total)
+                self.reiniciar_nivel()
+                self.set_active("form_game_L2")
+                    
+            if self.player_1.lives < 1 or self.cronometro < 1:
+                self.score_total = 0
+                self.reiniciar_nivel()
+                self.reproducir_musica(self.music_menu)
+                self.set_active("form_game_lose")
+                
+            self.daño_background()
             
     def on_click_boton1(self, parametro):
         self.reiniciar_nivel()
@@ -168,7 +167,6 @@ class FormGameLevel1(Form):
         self.boss = None
         self.platform_list = []
         self.enemies_list = []
-        self.bullet_list = []
         self.proyectile_list = []
         self.proyectile_enemy_list = []   
         self.loot_list = []
@@ -216,11 +214,11 @@ class FormGameLevel1(Form):
         
         self.player_1.draw(self.surface)
 
-        for bullet_element in self.bullet_list:
-            bullet_element.draw(self.surface)
+        for proyectile_element in self.proyectile_list:
+            proyectile_element.draw(self.surface)
             
-        for bullet_element in self.proyectile_enemy_list:
-            bullet_element.draw(self.surface)
+        for proyectile_element in self.proyectile_enemy_list:
+            proyectile_element.draw(self.surface)
             
         for loot_element in self.loot_list:
             loot_element.draw(self.surface)

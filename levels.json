@@ -4,7 +4,7 @@
             "id": 1,
             "GROUND_LEVEL": 600,
             "player": {
-                "x": 30,
+                "x": 100,
                 "y": 600,
                 "speed_walk": 10,
                 "speed_run": 10,
