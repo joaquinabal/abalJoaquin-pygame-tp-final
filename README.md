@@ -1,4 +1,3 @@
-
 # PYGAME SOULS
 
 Bienvenidos a PYGAME SOULS, un proyecto hecho en PYGAME para la entrega final de Programación 1 y Lab. Programación 1 de la Tecnicatura de Programación Superior en UTN FRA.
