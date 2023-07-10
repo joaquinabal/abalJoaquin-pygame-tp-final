@@ -69,3 +69,12 @@ Las monedas son el botín proveniente de la muerte de tus enemigos. Las monedas 
 
 Aunque parezcan que nos ayudarán a curarnos, estos corazones ya fueron corrompidos por el Rey Esqueleto. Si llegamos a tocar uno, perderemos una vida.
 
+![capture1](https://github.com/joaquinabal/joaquinAbal-pygame-tp-final/assets/88854241/cbc41b49-f539-4026-93de-a936179ce483)
+
+![capture2](https://github.com/joaquinabal/joaquinAbal-pygame-tp-final/assets/88854241/1926d559-08da-452c-9b25-2a483551a49c)
+
+![capture3](https://github.com/joaquinabal/joaquinAbal-pygame-tp-final/assets/88854241/f6aba1cc-62ca-46ca-8a92-4d8aad860bef)
+
+
+
+
