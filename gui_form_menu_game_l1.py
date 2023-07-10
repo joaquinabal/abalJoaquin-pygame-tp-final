@@ -32,7 +32,7 @@ class FormGameLevel1(Form):
                                   text="LEVEL 1",font='Arial',font_size=30,font_color=C_WHITE)
         
         self.text_required_score = Label(master=self,x=90,y=75,w=300,h=50,color_background=None,color_border=None,image_background=None,
-                                  text=f'NEXT LEVEL: 1000 POINTS',font='Arial',font_size=20,font_color=C_WHITE)
+                                  text=f'NEXT LEVEL: 1600 POINTS',font='Arial',font_size=20,font_color=C_WHITE)
         
         self.button_menu = Button(master=self,x=1275,y=725,w=140,h=50,color_background=None,color_border=None,image_background="images/gui/set_gui_01/Data_Border/Buttons/Button_M_06.png",on_click=self.on_click_boton1,on_click_param="form_menu_principal",text="MENU",font="Verdana",font_size=30,font_color=C_WHITE)
          
@@ -76,11 +76,9 @@ class FormGameLevel1(Form):
     def generate_enemies(self):
         data_enemies = self.levels[0]["enemies"]
         for enemy in data_enemies:
-            self.enemies_list.append(Enemy(x=enemy["x"],y=enemy["y"],speed_walk=enemy["speed_walk"],speed_run=enemy["speed_run"],
-                            gravity=enemy["gravity"],jump_power=enemy["jump_power"],frame_rate_ms=enemy["frame_rate_ms"],
-                            move_rate_ms=enemy["move_rate_ms"],jump_height=enemy["jump_height"],
-                            p_scale=enemy["p_scale"],interval_time_jump=enemy["interval_time_jump"],
-                            enemy_type=enemy["enemy_type"],x_length=enemy["x_length"],x_moving=enemy["x_moving"]))
+            self.enemies_list.append(Enemy(x=enemy["x"],y=enemy["y"],speed_walk=enemy["speed_walk"],gravity=enemy["gravity"],frame_rate_ms=enemy["frame_rate_ms"],
+                            move_rate_ms=enemy["move_rate_ms"],p_scale=enemy["p_scale"],interval_time_jump=enemy["interval_time_jump"],
+                            enemy_type=enemy["enemy_type"],x_length=enemy["x_length"],x_moving=enemy["x_moving"],moving_right=enemy["moving_right"]))
         
     
     def generate_platform(self):
@@ -140,7 +138,7 @@ class FormGameLevel1(Form):
 
             self.pb_lives.value = self.player_1.lives 
 
-            if self.player_1.score > 1000:
+            if self.player_1.score >= 1600:
                 self.score_total = self.player_1.score
                 print(self.score_total)
                 self.reiniciar_nivel()

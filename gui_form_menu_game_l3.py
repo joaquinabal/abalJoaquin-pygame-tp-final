@@ -82,9 +82,9 @@ class FormGameLevel3(Form):
     def generate_enemies(self):
         data_enemies = self.levels[2]["enemies"]
         for enemy in data_enemies:
-            self.enemies_list.append(Enemy(x=enemy["x"],y=enemy["y"],speed_walk=enemy["speed_walk"],speed_run=enemy["speed_run"],
-                            gravity=enemy["gravity"],jump_power=enemy["jump_power"],frame_rate_ms=enemy["frame_rate_ms"],
-                            move_rate_ms=enemy["move_rate_ms"],jump_height=enemy["jump_height"],
+            self.enemies_list.append(Enemy(x=enemy["x"],y=enemy["y"],speed_walk=enemy["speed_walk"],
+                            gravity=enemy["gravity"],frame_rate_ms=enemy["frame_rate_ms"],
+                            move_rate_ms=enemy["move_rate_ms"],
                             p_scale=enemy["p_scale"],interval_time_jump=enemy["interval_time_jump"],
                             enemy_type=enemy["enemy_type"],x_length=enemy["x_length"],x_moving=enemy["x_moving"]))
         
@@ -130,7 +130,7 @@ class FormGameLevel3(Form):
                 proyectile_element.update(delta_ms,self.enemies_list,self.platform_list,self.proyectile_list,proyectile_element,self.player_1,self.loot_list,self.boss)
                 
             for proyectile_enemy_element in self.proyectile_enemy_list:
-                proyectile_enemy_element.update(delta_ms,self.enemies_list,self.platform_list,self.proyectile_enemy_list,proyectile_enemy_element,self.player_1,self.loot_list)
+                proyectile_enemy_element.update(delta_ms,self.enemies_list,self.platform_list,self.proyectile_enemy_list,proyectile_enemy_element,self.player_1,self.loot_list,self.boss)
 
             for enemy_element in self.enemies_list:
                 enemy_element.update(delta_ms,self.platform_list,self.player_1,self.proyectile_enemy_list)

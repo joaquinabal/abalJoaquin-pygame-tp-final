@@ -64,7 +64,7 @@ class Boss():
         self.lives -= 1
         
     def do_attack(self,player,enemies_list):
-        if self.calculate_delta_time(7000) and self.animation == self.stay:
+        if self.calculate_delta_time(6000) and (self.animation == self.stay or self.animation == self.dmg):
             self.animation = self.attack            
             self.tiempo_inicial = pygame.time.get_ticks()
         if self.animation == self.attack and self.frame == len(self.animation) - 1:
@@ -121,7 +121,7 @@ class Boss():
             self.flag_death = True
             
     def generate_enemy(self,enemies_list,player):
-        enemies_list.append(Enemy(x=player.rect.x,y=0,speed_walk=4,speed_run=8,gravity=40,jump_power=10,frame_rate_ms=80,move_rate_ms=80,jump_height=100,x_length=50,x_moving=1,p_scale=1,interval_time_jump=100,enemy_type=2))
+        enemies_list.append(Enemy(x=player.rect.x,y=0,speed_walk=4,gravity=40,frame_rate_ms=80,move_rate_ms=80,x_length=50,x_moving=1,p_scale=1,interval_time_jump=100,enemy_type=2))
         
                 
         

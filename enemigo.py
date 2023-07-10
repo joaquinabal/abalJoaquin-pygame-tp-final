@@ -4,8 +4,8 @@ from auxiliar import Auxiliar
 
 class Enemy():
     
-    def __init__(self,x,y,speed_walk,speed_run,gravity,jump_power,frame_rate_ms,move_rate_ms,jump_height,x_length,x_moving,
-                 p_scale=1,interval_time_jump=100,enemy_type=0) -> None:
+    def __init__(self,x,y,speed_walk,gravity,frame_rate_ms,move_rate_ms,x_length,x_moving,
+                 p_scale=1,interval_time_jump=100,enemy_type=0,moving_right=True) -> None:
         '''self.walk_r = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/WALK/WALK_00{0}.png",0,7,scale=p_scale)
         self.walk_l = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/WALK/WALK_00{0}.png",0,7,flip=True,scale=p_scale)
         self.stay_r = Auxiliar.getSurfaceFromSeparateFiles("images/caracters/enemies/ork_sword/IDLE/IDLE_00{0}.png",0,7,scale=p_scale)
@@ -35,11 +35,9 @@ class Enemy():
         self.move_x = 0
         self.move_y = 0
         self.speed_walk =  speed_walk
-        self.speed_run =  speed_run
         self.gravity = gravity
-        self.jump_power = jump_power
-        self.animation = self.stay_r
         self.direction = DIRECTION_R
+        self.animation = self.stay_r
         self.image = self.animation[self.frame]
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -49,17 +47,11 @@ class Enemy():
         self.ground_collition_rect.height = GROUND_COLLIDE_H
         self.ground_collition_rect.y = y + self.rect.height - GROUND_COLLIDE_H
 
-        self.is_jump = False
-        self.is_fall = False
-        self.is_shoot = False
-        self.is_knife = False
-
         self.tiempo_transcurrido_animation = 0
         self.frame_rate_ms = frame_rate_ms 
         self.tiempo_transcurrido_move = 0
         self.move_rate_ms = move_rate_ms
         self.y_start_jump = 0
-        self.jump_height = jump_height
 
         self.tiempo_transcurrido = 0
         self.tiempo_last_jump = 0 # en base al tiempo transcurrido general
@@ -69,7 +61,7 @@ class Enemy():
         self.initial_y = y
         self.initial_x = x
         self.x_length = x_length
-        self.movement_right = True
+        self.movement_right = moving_right
         self.flag_attack = True
         
         self.tiempo_inicial = pygame.time.get_ticks()
@@ -98,29 +90,29 @@ class Enemy():
                 self.is_fall = False
                 if self.x_moving == 1:
                     #print(")))")
-                    if self.movement_right:
+                    if self.movement_right == 1:
                         self.change_x(self.speed_walk)
                         self.animation = self.walk_r
                         if self.rect.x > self.initial_x + self.x_length:
-                            self.movement_right = False
+                            self.movement_right = 0
                     else:
                         self.change_x(-self.speed_walk)
                         self.animation = self.walk_l
                         if self.rect.x < self.initial_x - self.x_length:
-                            self.movement_right = True
+                            self.movement_right = 1
                 else:
                     #print("==")
                     if self.movement_right:
                         self.change_y(self.speed_walk)
                         #self.animation = self.walk_r
                         if self.rect.y > self.initial_y + self.x_length:
-                            self.movement_right = False
+                            self.movement_right = 0
                         #print("pabajo")
                     else:
                         self.change_y(-self.speed_walk)
                         #self.animation = self.walk_l
                         if self.rect.y < self.initial_y - self.x_length:
-                            self.movement_right = True
+                            self.movement_right = 1
                         #print("parriba")
     
     def is_on_plataform(self,plataform_list):
